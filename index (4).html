@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Welcome to BizComp 💌</title>
+<meta name="description" content="A little letter for our new BizComp members">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,800;0,900;1,500&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --lav:#DCD6EC; --lav2:#C9BFE6; --lav3:#B5A8DE; --blush:#F2D4E1; --pink:#E85C93; --pink2:#F7B8CF;
+    --cream:#FBF8F3; --navy:#2B2A5C; --plum:#5B3F86; --gold:#F6C945; --ink:#3A3762;
+    --sans:'Montserrat',system-ui,sans-serif; --script:'Dancing Script',cursive;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;background:#E9E1F0}
+  body{font-family:var(--sans);color:var(--navy);min-height:100svh;overflow-x:hidden;
+       background:linear-gradient(165deg,#F6DCE7 0%,#E7DDF2 45%,#D6CEEC 100%)}
+  button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+  button:focus-visible{outline:3px solid var(--plum);outline-offset:4px}
+
+  /* ---------- sky ---------- */
+  .sky{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+  .blob{position:absolute;border-radius:50%;filter:blur(40px);opacity:.55}
+  .b1{width:60vmax;height:60vmax;left:-20vmax;top:-18vmax;background:#F7C3D7}
+  .b2{width:55vmax;height:55vmax;right:-22vmax;bottom:-20vmax;background:#C7BBEB}
+  .b3{width:30vmax;height:30vmax;right:-6vmax;top:18vh;background:#FBE3EC;opacity:.7}
+  .st{position:absolute;color:#fff;opacity:0;animation:twinkle var(--d) var(--w) ease-in-out infinite, drift 14s var(--w) ease-in-out infinite alternate}
+  .st svg{display:block;width:100%;height:100%}
+  @keyframes twinkle{0%,100%{opacity:.25}50%{opacity:.95}}
+  @keyframes drift{to{transform:translateY(-14px) rotate(18deg)}}
+
+  /* ---------- ticker strips ---------- */
+  .ticker{position:fixed;left:0;right:0;z-index:5;height:30px;background:var(--navy);overflow:hidden;display:flex;align-items:center;
+          transform:translateY(-100%);animation:tickIn .7s .2s cubic-bezier(.2,.9,.3,1.2) forwards}
+  .ticker.top{top:0}
+  .ticker.bot{bottom:0;transform:translateY(100%)}
+  @keyframes tickIn{to{transform:none}}
+  .track{display:flex;white-space:nowrap;animation:roll 22s linear infinite}
+  .ticker.bot .track{animation-direction:reverse}
+  .track span{color:var(--lav);font-weight:800;font-size:12px;letter-spacing:.08em;padding:0 10px}
+  .track b{color:var(--pink2);font-size:11px}
+  @keyframes roll{to{transform:translateX(-50%)}}
+
+  .ribbon{position:fixed;top:44px;right:-46px;z-index:4;transform:rotate(38deg);background:#fff;color:var(--navy);
+          font-weight:900;font-size:12px;letter-spacing:.12em;padding:6px 52px;box-shadow:0 6px 18px rgba(43,42,92,.15);
+          opacity:0;animation:fadeIn .6s .7s forwards}
+  @keyframes fadeIn{to{opacity:1}}
+
+  /* ---------- layout ---------- */
+  main{position:relative;z-index:2;min-height:100svh;display:flex;flex-direction:column;align-items:center;
+       padding:calc(46px + env(safe-area-inset-top)) 16px calc(52px + env(safe-area-inset-bottom))}
+  .brand{display:flex;flex-direction:column;align-items:center;gap:2px;opacity:0;animation:rise .7s .5s cubic-bezier(.2,.9,.3,1.2) forwards}
+  .word{display:flex;align-items:flex-end;gap:6px;font-weight:900;font-size:24px;letter-spacing:-.02em}
+  .word .biz{background:linear-gradient(120deg,var(--plum),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .word svg{width:20px;height:24px;margin-bottom:4px}
+  .brand small{font-size:10px;font-weight:600;letter-spacing:.06em;color:var(--plum);opacity:.8}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .stage{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;margin-top:8px}
+
+  /* ---------- envelope ---------- */
+  .envwrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:22px}
+  .env{--w:min(80vw,360px);position:relative;width:var(--w);height:calc(var(--w) * .66);perspective:900px;cursor:pointer;
+       opacity:0;transform:translateY(-60vh) rotate(-14deg);animation:drop 1.1s .9s cubic-bezier(.34,1.25,.64,1) forwards;border:0;background:none;will-change:transform}
+  @keyframes drop{to{opacity:1;transform:rotate(-3deg)}}
+  .env:hover .mini{transform:translateY(-6px)}
+  .back{position:absolute;inset:0;border-radius:14px;background:linear-gradient(160deg,var(--lav3),#A797D8);
+        box-shadow:0 26px 50px rgba(43,42,92,.25)}
+  .back::after{content:"";position:absolute;inset:10px 10px auto;height:52%;border-radius:8px 8px 0 0;
+        background:repeating-linear-gradient(45deg,var(--pink2) 0 10px,#F9CFDF 10px 20px);opacity:.9}
+  .mini{position:absolute;left:8%;right:8%;top:9%;height:84%;border-radius:8px;background:var(--cream);
+        box-shadow:0 2px 6px rgba(0,0,0,.08);transition:transform .35s;z-index:2}
+  .mini::before{content:"";position:absolute;left:14%;right:14%;top:18%;height:5px;border-radius:3px;background:var(--lav);
+        box-shadow:0 12px 0 var(--lav),0 24px 0 var(--lav),0 36px 0 #EDE8F5}
+  .front{position:absolute;inset:0;z-index:3;border-radius:14px;overflow:hidden;
+         background:linear-gradient(180deg,#D3C9EF,#C2B5E8);
+         clip-path:polygon(0 34%,50% 64%,100% 34%,100% 100%,0 100%)}
+  .front::before{content:"";position:absolute;inset:0;background:
+      linear-gradient(to top right,transparent 49.6%,rgba(255,255,255,.45) 50%,transparent 50.6%) left bottom/50% 66% no-repeat,
+      linear-gradient(to top left,transparent 49.6%,rgba(255,255,255,.45) 50%,transparent 50.6%) right bottom/50% 66% no-repeat}
+  .to{position:absolute;z-index:4;left:4%;right:4%;bottom:5%;text-align:center;font-family:var(--script);font-size:clamp(15px,4.4vw,20px);line-height:1.25;
+      color:var(--navy);pointer-events:none}
+  .flap{position:absolute;inset:0 0 auto;height:56%;z-index:5;transform-origin:50% 0;transform-style:preserve-3d;
+        transition:transform .7s cubic-bezier(.45,0,.2,1), z-index 0s, opacity .35s}
+  .flap::before,.flap::after{content:"";position:absolute;inset:0;backface-visibility:hidden;
+       -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpath d='M.03,0 H.97 Q1,0 .975,.035 L.565,.92 Q.5,1.02 .435,.92 L.025,.035 Q0,0 .03,0 Z'/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1' preserveAspectRatio='none'%3E%3Cpath d='M.03,0 H.97 Q1,0 .975,.035 L.565,.92 Q.5,1.02 .435,.92 L.025,.035 Q0,0 .03,0 Z'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+  .flap::before{background:linear-gradient(180deg,#CFC3EE,#B9ABE5)}
+  /* inside of the flap (seen once opened): soft solid blush, rounded tip, not stripes */
+  .flap::after{background:linear-gradient(0deg,#F7E3EC,#E8DDF5);transform:rotateX(180deg)}
+  .seal{position:absolute;z-index:6;left:50%;top:55%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;
+        background:radial-gradient(circle at 35% 30%,#ff8fb8,var(--pink) 55%,#C23F76);display:grid;place-items:center;
+        box-shadow:0 6px 14px rgba(194,63,118,.45), inset 0 -3px 0 rgba(0,0,0,.12)}
+  .seal svg{width:28px;height:28px}
+  .seal::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(255,255,255,.7);animation:ping 1.8s 2.2s ease-out infinite;opacity:0}
+  @keyframes ping{0%{opacity:.9;transform:scale(.8)}100%{opacity:0;transform:scale(1.5)}}
+
+  .pill{border:0;background:#fff;color:var(--navy);font-weight:800;font-size:15px;padding:12px 26px;border-radius:999px;
+        box-shadow:0 8px 0 var(--lav3),0 14px 28px rgba(43,42,92,.2);opacity:0;animation:rise .6s 2s cubic-bezier(.2,.9,.3,1.2) forwards, nudge 2.4s 3s ease-in-out infinite}
+  .pill:active{transform:translateY(5px);box-shadow:0 3px 0 var(--lav3)}
+  @keyframes nudge{0%,100%{transform:none}50%{transform:translateY(-4px)}}
+  .hint{font-size:12px;color:var(--plum);opacity:0;animation:fadeIn .6s 2.4s forwards;margin-top:-8px}
+
+  /* opening */
+  body.open .seal{animation:sealPop .45s cubic-bezier(.5,0,.75,0) forwards}
+  @keyframes sealPop{0%{transform:none}35%{transform:scale(1.18)}100%{transform:scale(0) rotate(60deg);opacity:0}}
+  /* the flap flips open, then quietly disappears so the top of the envelope stays clean while the letter rises */
+  body.open .flap{transform:rotateX(180deg);z-index:1;opacity:0;transition-delay:.15s,.5s,.6s}
+  .mini{will-change:transform}
+  body.open .mini{transform:translateY(-72%) rotate(1.5deg);transition:transform .85s .55s cubic-bezier(.22,1,.36,1)}
+  body.out .mini{opacity:0;transition:opacity .15s}
+  body.open .pill,body.open .hint{animation:fadeOut .3s forwards}
+  @keyframes fadeOut{to{opacity:0;visibility:hidden}}
+  body.out .envwrap{animation:envAway .65s cubic-bezier(.4,0,.2,1) forwards}
+  @keyframes envAway{to{opacity:0;transform:translateY(22vh) scale(.9)}}
+  body.out .envwrap{pointer-events:none}
+
+  /* ---------- the letter ---------- */
+  .letterwrap{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:6px 0}
+  body.out .letterwrap{display:flex}
+  .letter{position:relative;width:min(92vw,430px);background:var(--cream);border-radius:14px;padding:46px 26px 26px;
+          box-shadow:0 30px 60px rgba(43,42,92,.25),0 2px 0 #fff inset;transform:rotate(-1.2deg);
+          background-image:radial-gradient(rgba(91,63,134,.05) 1px,transparent 1px);background-size:10px 10px;
+          will-change:transform}
+  @keyframes letterIn{from{opacity:0;transform:translateY(38vh) scale(.55) rotate(-6deg)}to{opacity:1;transform:rotate(-1.2deg)}}
+  .clip{position:absolute;top:-34px;left:50%;width:84px;margin-left:-42px;z-index:3;opacity:0;animation:clipIn .55s .6s cubic-bezier(.34,1.4,.64,1) forwards}
+  @keyframes clipIn{from{opacity:0;transform:translateY(-40px) rotate(-20deg)}to{opacity:1;transform:none}}
+  .stk{position:absolute;z-index:3;opacity:0;filter:drop-shadow(0 6px 8px rgba(43,42,92,.25));animation:stick .5s cubic-bezier(.34,1.5,.64,1) forwards}
+  .stk svg{display:block;width:100%;height:100%}
+  .s1{width:74px;height:74px;top:-22px;right:-14px;--r:14deg;animation-delay:.8s}
+  .s2{width:66px;height:84px;bottom:-26px;left:-12px;--r:-12deg;animation-delay:.95s}
+  .s3{width:46px;height:46px;top:30px;left:-14px;--r:-18deg;animation-delay:1.1s}
+  @keyframes stick{0%{opacity:0;transform:scale(1.8) rotate(0deg)}100%{opacity:1;transform:rotate(var(--r))}}
+
+  .kick{display:inline-block;background:var(--lav);color:var(--plum);font-weight:700;font-size:11px;letter-spacing:.08em;
+        padding:5px 12px;border-radius:999px;text-transform:uppercase}
+  .letter h1{font-weight:900;font-size:clamp(25px,7vw,32px);line-height:1.1;letter-spacing:-.02em;margin:12px 0 4px;color:var(--navy)}
+  .letter h1 .biz{background:linear-gradient(120deg,var(--plum),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stars{color:var(--lav3);font-size:13px;letter-spacing:.4em;margin:6px 0 14px}
+  .letter p{font-size:clamp(14px,3.9vw,15.5px);line-height:1.75;color:var(--ink);font-weight:500}
+  .letter p + p{margin-top:12px}
+  .rv{opacity:0;transform:translateY(10px);animation:rise .8s cubic-bezier(.22,1,.36,1) forwards}
+  .sig{display:block;text-align:right;margin-top:14px;font-family:var(--script);font-weight:700;font-size:34px;color:var(--plum);
+       clip-path:inset(0 100% 0 0);animation:write 1.3s var(--sd) cubic-bezier(.45,.05,.55,.95) forwards}
+  @keyframes write{to{clip-path:inset(0 -10% 0 0)}}
+
+  .after{display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:rise .6s var(--ad) cubic-bezier(.2,.9,.3,1.2) forwards}
+  .heartbtn{border:0;background:linear-gradient(135deg,#FF8DB7,var(--pink));color:#fff;font-weight:800;font-size:16px;padding:14px 30px;border-radius:999px;
+            box-shadow:0 7px 0 #C23F76,0 16px 30px rgba(232,92,147,.35);transition:transform .1s}
+  .heartbtn:active{transform:translateY(5px) scale(.98);box-shadow:0 2px 0 #C23F76}
+  .count{font-size:13px;font-weight:600;color:var(--plum);min-height:18px;text-align:center}
+  .again{border:0;background:none;color:var(--navy);font-size:12px;font-weight:600;opacity:.6;text-decoration:underline;text-underline-offset:3px}
+
+  /* ---------- effects ---------- */
+  .fx{position:fixed;inset:0;pointer-events:none;z-index:20;overflow:hidden}
+  .burst{position:absolute;font-size:var(--s);line-height:1;color:var(--c);animation:burst var(--t) cubic-bezier(.15,.7,.3,1) forwards}
+  @keyframes burst{0%{opacity:1;transform:translate(-50%,-50%) scale(.3)}70%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--rot)) scale(1)}}
+  .float{position:absolute;font-size:var(--s);animation:floatUp var(--t) ease-out forwards}
+  @keyframes floatUp{0%{opacity:0;transform:translate(-50%,0) scale(.4)}15%{opacity:1;transform:translate(-50%,-20px) scale(1.1)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),-60vh) rotate(var(--rot)) scale(.9)}}
+
+  @media (prefers-reduced-motion:reduce){
+    .st{animation:twinkle var(--d) var(--w) ease-in-out infinite}
+    .track{animation-duration:60s}
+    .pill{animation:rise .6s 2s both}
+  }
+  @media (max-height:700px){
+    .letter{padding:40px 20px 20px}
+    .letter p{line-height:1.6}
+    main{padding-top:40px}
+  }
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div id="stars"></div></div>
+
+<div class="ticker top" aria-hidden="true"><div class="track" id="t1"></div></div>
+<div class="ticker bot" aria-hidden="true"><div class="track" id="t2"></div></div>
+<div class="ribbon" aria-hidden="true">NEW MEMBERS</div>
+
+<main>
+  <div class="brand">
+    <div class="word">
+      <svg viewBox="0 0 20 24" aria-hidden="true"><rect x="1" y="12" width="4" height="12" rx="1" fill="#5B3F86"/><rect x="8" y="6" width="4" height="18" rx="1" fill="#E85C93"/><rect x="15" y="0" width="4" height="24" rx="1" fill="#2B2A5C"/></svg>
+      <span><span class="biz">Biz</span>Comp</span>
+    </div>
+    <small>BASCii BUSINESS COMPETITION CLUB</small>
+  </div>
+
+  <div class="stage">
+    <div class="envwrap">
+      <button class="env" id="env" aria-label="Open the letter">
+        <div class="back"></div>
+        <div class="mini"></div>
+        <div class="front"></div>
+        <div class="to">to my BizBuddy team and<br>new members of BizComp fam 💌</div>
+        <div class="flap"></div>
+        <div class="seal"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.8 6 6.6.7-4.9 4.5 1.4 6.5L12 16.9 6.1 20.2l1.4-6.5L2.6 9.2l6.6-.7z" fill="#fff"/></svg></div>
+      </button>
+      <button class="pill" id="open">tap to open ✦</button>
+      <p class="hint">a little letter, just for you</p>
+    </div>
+
+    <div class="letterwrap" id="lw" aria-live="polite">
+      <article class="letter">
+        <svg class="clip" viewBox="0 0 84 50" aria-hidden="true">
+          <rect x="10" y="20" width="64" height="26" rx="6" fill="#2B2A5C"/>
+          <rect x="16" y="24" width="52" height="5" rx="2.5" fill="#4A4885"/>
+          <path d="M22 20 C22 6 30 2 42 2 C54 2 62 6 62 20" fill="none" stroke="#B5A8DE" stroke-width="4" stroke-linecap="round"/>
+          <path d="M42 26.5l2.2 4.6 5 .5-3.7 3.4 1 5-4.5-2.6-4.5 2.6 1-5-3.7-3.4 5-.5z" fill="#F7B8CF"/>
+        </svg>
+        <!-- trophy sticker -->
+        <div class="stk s1" aria-hidden="true"><svg viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="37" fill="#fff"/>
+          <circle cx="40" cy="40" r="31" fill="#F2D4E1"/>
+          <path d="M27 22h26v8c0 9-6 15-13 15s-13-6-13-15z" fill="#F6C945" stroke="#C9971C" stroke-width="2"/>
+          <path d="M27 25h-6c0 8 4 11 8 11M53 25h6c0 8-4 11-8 11" fill="none" stroke="#C9971C" stroke-width="2.5" stroke-linecap="round"/>
+          <rect x="36" y="44" width="8" height="8" fill="#E2B030"/><rect x="29" y="52" width="22" height="6" rx="2" fill="#5B3F86"/>
+          <path d="M40 27l1.6 3.3 3.6.4-2.7 2.4.8 3.6-3.3-1.9-3.3 1.9.8-3.6-2.7-2.4 3.6-.4z" fill="#fff"/>
+        </svg></div>
+        <!-- medal sticker -->
+        <div class="stk s2" aria-hidden="true"><svg viewBox="0 0 66 84">
+          <path d="M14 4h14l8 30H22zM52 4H38l-8 30h14z" fill="#fff"/>
+          <path d="M17 7h9l6.5 24h-9zM49 7h-9l-6.5 24h9z" fill="#E85C93"/><path d="M21 7h4l6 24h-4z" fill="#5B3F86" opacity=".55"/>
+          <circle cx="33" cy="52" r="26" fill="#fff"/><circle cx="33" cy="52" r="21" fill="#F6C945" stroke="#C9971C" stroke-width="2"/>
+          <circle cx="33" cy="52" r="15" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="2 3"/>
+          <text x="33" y="58" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="900" font-size="16" fill="#2B2A5C">1st</text>
+        </svg></div>
+        <!-- star sticker -->
+        <div class="stk s3" aria-hidden="true"><svg viewBox="0 0 50 50">
+          <path d="M25 2l6.6 13.8 15.2 1.7-11.3 10.4 3.2 15L25 35.4 11.3 42.9l3.2-15L3.2 17.5l15.2-1.7z" fill="#fff"/>
+          <path d="M25 8l5 10.6 11.6 1.3-8.6 7.9 2.4 11.4L25 33.5l-10.4 5.7 2.4-11.4-8.6-7.9 11.6-1.3z" fill="#B5A8DE"/>
+        </svg></div>
+
+        <span class="kick rv" style="animation-delay:.75s">a little note for you ✦</span>
+        <h1 class="rv" style="animation-delay:.95s">Welcome to <span class="biz">BizComp</span> na! 🫶🏻</h1>
+        <div class="stars rv" style="animation-delay:1.15s">☆ ✦ ☆</div>
+        <p class="rv" style="animation-delay:1.35s">So grateful to have you all here. Whatever brought you to BizComp, I hope we’ll make good memories, learn from each other, and grow together along the way.</p>
+        <p class="rv" style="animation-delay:2.05s">Nice to meet you all, and let’s hang out more naaa! 💗</p>
+        <span class="sig" style="--sd:2.7s">— Vava</span>
+      </article>
+
+      <div class="after" style="--ad:4.1s">
+        <button class="heartbtn" id="heart">send a heart back 💗</button>
+        <div class="count" id="count"></div>
+        <button class="again" id="again">read it again</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="fx" id="fx" aria-hidden="true"></div>
+
+<script>
+// sky stars
+const STAR = '<svg viewBox="0 0 24 24"><path d="M12 2.5l2.8 6 6.6.7-4.9 4.5 1.4 6.5L12 16.9 6.1 20.2l1.4-6.5L2.6 9.2l6.6-.7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+document.getElementById('stars').innerHTML = Array.from({length:22},()=>{
+  const s = 10+Math.random()*20;
+  return `<span class="st" style="left:${(Math.random()*96).toFixed(1)}%;top:${(Math.random()*92).toFixed(1)}%;width:${s}px;height:${s}px;--d:${(2.5+Math.random()*3).toFixed(1)}s;--w:${(Math.random()*3).toFixed(1)}s">${STAR}</span>`;
+}).join('');
+
+// ticker text
+const tick = '<span>BizComp</span><b>★</b><span>HAPPY TO HAVE YOU</span><b>★</b><span>LET’S GROW TOGETHER</span><b>★</b>';
+['t1','t2'].forEach(id => document.getElementById(id).innerHTML = tick.repeat(6));
+
+const body = document.body, fx = document.getElementById('fx');
+
+function burstFrom(el, n, chars){
+  const r = el.getBoundingClientRect(), cx = r.left + r.width/2, cy = r.top + r.height/2;
+  for (let i=0;i<n;i++){
+    const a = Math.random()*Math.PI*2, d = 80 + Math.random()*Math.min(innerWidth,520)*.55;
+    const sp = document.createElement('span'); sp.className = 'burst';
+    sp.textContent = chars[i % chars.length];
+    sp.style.cssText = `left:${cx}px;top:${cy}px;--x:${Math.cos(a)*d}px;--y:${Math.sin(a)*d}px;--rot:${Math.random()*360}deg;--s:${12+Math.random()*16}px;--t:${(0.9+Math.random()*0.8).toFixed(2)}s;--c:${['#E85C93','#5B3F86','#F6C945','#fff','#B5A8DE'][i%5]}`;
+    fx.appendChild(sp); setTimeout(()=>sp.remove(), 1900);
+  }
+}
+
+let opened = false;
+const env = document.getElementById('env'), mini = document.querySelector('.mini'), letter = document.querySelector('.letter');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// once the envelope has landed, hand it over to a simple transform so it can react to the tap
+env.addEventListener('animationend', e => {
+  if (e.animationName !== 'drop') return;
+  env.style.cssText = 'animation:none;opacity:1;transform:rotate(-3deg);transition:transform .5s cubic-bezier(.22,1,.36,1)';
+});
+
+function openLetter(){
+  if (opened) return; opened = true;
+  window.scrollTo(0, 0);
+  env.style.transform = 'rotate(0deg) scale(1.04)';          // straightens up as you tap it
+  burstFrom(document.querySelector('.seal'), 14, ['✦','★','☆','♥']);
+  body.classList.add('open');
+  setTimeout(handoff, 1350);
+}
+
+// the small letter peeking out of the envelope smoothly grows into the full letter (same spot, no jump)
+function handoff(){
+  const m = mini.getBoundingClientRect();
+  body.classList.add('out');
+  const f = letter.getBoundingClientRect();
+  const dx = (m.left + m.width/2) - (f.left + f.width/2);
+  const dy = (m.top + m.height/2) - (f.top + f.height/2);
+  letter.animate([
+    { transform:`translate(${dx}px,${dy}px) scale(${m.width/f.width},${m.height/f.height}) rotate(1.5deg)`, boxShadow:'0 4px 10px rgba(43,42,92,.12)' },
+    { transform:'translate(0,-14px) scale(1.02) rotate(-2deg)', offset:.7 },
+    { transform:'rotate(-1.2deg)', boxShadow:'0 30px 60px rgba(43,42,92,.25)' }
+  ], { duration: reduce ? 1 : 950, easing:'cubic-bezier(.22,1,.36,1)', fill:'both' });
+  setTimeout(()=>burstFrom(document.querySelector('.letter h1'), 28, ['♥','★','✦','☆','💗','🫶🏻']), 4000);
+}
+env.addEventListener('click', openLetter);
+document.getElementById('open').addEventListener('click', openLetter);
+
+// send a heart back
+let hearts = 0;
+const LINES = [[1,'Vava got your heart 💗'],[5,'awww 🥹'],[12,'okay okay, we love you too 🫶🏻'],[25,'BizComp fam forever ✦'],[50,'you have SO much love to give 😭💗'],[100,'legendary heart sender 🏆']];
+document.getElementById('heart').addEventListener('click', e => {
+  hearts++;
+  const r = e.currentTarget.getBoundingClientRect();
+  const emo = ['💗','💜','🤍','🫶🏻','💕','✨'];
+  for (let i=0;i<5;i++){
+    const h = document.createElement('span'); h.className = 'float';
+    h.textContent = emo[Math.floor(Math.random()*emo.length)];
+    h.style.cssText = `left:${r.left + r.width/2 + (Math.random()*60-30)}px;top:${r.top}px;--x:${Math.random()*140-70}px;--rot:${Math.random()*60-30}deg;--s:${18+Math.random()*16}px;--t:${(1.6+Math.random()*1.2).toFixed(2)}s;animation-delay:${i*70}ms`;
+    fx.appendChild(h); setTimeout(()=>h.remove(), 3400);
+  }
+  const line = [...LINES].reverse().find(([n]) => hearts >= n);
+  document.getElementById('count').textContent = `${hearts} ${hearts===1?'heart':'hearts'} sent · ${line ? line[1] : ''}`;
+  if (navigator.vibrate) navigator.vibrate(12);
+});
+
+// replay
+document.getElementById('again').addEventListener('click', () => {
+  letter.getAnimations().forEach(x => x.cancel());
+  env.removeAttribute('style');
+  body.classList.remove('open','out'); opened = false; hearts = 0;
+  document.getElementById('count').textContent = '';
+  // restart css animations
+  document.querySelectorAll('.env,.pill,.hint,.letter,.letter *,.after').forEach(el => { el.style.animation='none'; void el.offsetWidth; el.style.animation=''; });
+  window.scrollTo({top:0});
+});
+</script>
+</body>
+</html>
